@@ -1,0 +1,497 @@
+/* academicpages layout (masthead + author sidebar + content) in Apple's
+   design language: SF Pro type, frosted nav, #f5f5f7 ground, white cards. */
+
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --nav-bg: rgba(251, 251, 253, 0.72);
+  --fg: #1d1d1f;
+  --fg-secondary: #6e6e73;
+  --rule: rgba(0, 0, 0, 0.08);
+  --link: #0066cc;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --chip: #f5f5f7;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.06), 0 18px 44px rgba(0, 0, 0, 0.07);
+  --page-max: 76rem;
+  --radius: 1.125rem;
+  --masthead-h: 2.75rem;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --surface: #1d1d1f;
+    --nav-bg: rgba(22, 22, 23, 0.72);
+    --fg: #f5f5f7;
+    --fg-secondary: #86868b;
+    --rule: rgba(255, 255, 255, 0.1);
+    --link: #2997ff;
+    --accent: #0071e3;
+    --accent-hover: #147ce5;
+    --chip: rgba(255, 255, 255, 0.06);
+    --shadow: none;
+    --shadow-hover: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--masthead-h) + 1.5rem);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.016em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+}
+
+/* ---------- Frosted masthead ---------- */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--masthead-h);
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead-inner {
+  max-width: var(--page-max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.site-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.site-title:hover { text-decoration: none; opacity: 0.7; }
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.site-nav a {
+  color: var(--fg);
+  opacity: 0.8;
+  transition: opacity 0.2s var(--ease);
+}
+.site-nav a:hover { opacity: 1; text-decoration: none; }
+.site-nav a[aria-current="page"] { opacity: 1; font-weight: 600; }
+
+/* ---------- Page frame ---------- */
+
+.page-wrap {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 1rem;
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* ---------- Author sidebar (white card) ---------- */
+
+.sidebar {
+  position: sticky;
+  top: calc(var(--masthead-h) + 2rem);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.avatar {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1.125rem;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+.author-text { text-align: center; }
+
+.author-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  margin: 0 0 0.35rem;
+}
+
+.author-bio {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--fg-secondary);
+}
+
+.author-links {
+  list-style: none;
+  margin: 1.375rem 0 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem;
+}
+
+.author-links li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+.author-links li:last-child { margin-bottom: 0; }
+
+.author-links svg {
+  width: 0.9375rem;
+  height: 0.9375rem;
+  flex-shrink: 0;
+  color: var(--fg-secondary);
+  transform: translateY(0.15rem);
+}
+
+.author-links a {
+  color: var(--fg);
+  transition: color 0.2s var(--ease);
+}
+.author-links a:hover { color: var(--link); text-decoration: none; }
+
+/* ---------- Content ---------- */
+
+.content h1 {
+  font-size: 3rem;
+  line-height: 1.05;
+  margin: 0 0 0.75rem;
+}
+
+.lede {
+  font-size: 1.3125rem;
+  line-height: 1.4;
+  letter-spacing: -0.021em;
+  color: var(--fg-secondary);
+  margin: 0 0 2rem;
+}
+.content h1 + .lede { margin-top: -0.25rem; }
+
+/* Each section is a card */
+.content section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 2rem;
+  margin: 1.5rem 0 0;
+}
+.content h1 + section,
+.lede + section { margin-top: 0; }
+
+.content h2 {
+  font-size: 1.375rem;
+  margin: 0 0 1.125rem;
+}
+
+.content p { margin: 0 0 1rem; }
+.content p:last-child { margin-bottom: 0; }
+
+/* Cards span the full column so figures have room, but running prose stays at a
+   readable line length. */
+.content section > p:not(.pub-note),
+.content section > ul:not(.entries) { max-width: 42rem; }
+
+.content ul:not(.entries):not(.author-links) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.content ul:not(.entries):not(.author-links) li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.content ul:not(.entries):not(.author-links) li:last-child { margin-bottom: 0; }
+.content ul:not(.entries):not(.author-links) li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.6875rem;
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------- Entry lists ---------- */
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entries > li {
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.entries > li:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.entry-title {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.019em;
+  color: var(--fg);
+}
+.entry-title a { color: var(--fg); }
+.entry-title a:hover { color: var(--link); text-decoration: none; }
+
+.entry-date {
+  color: var(--fg-secondary);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.entry-sub {
+  color: var(--fg-secondary);
+  font-size: 0.9375rem;
+  margin-top: 0.125rem;
+}
+
+.entries p {
+  margin: 0.375rem 0 0;
+  font-size: 0.9375rem;
+  max-width: 42rem;
+}
+
+.entry-sub { max-width: 42rem; }
+
+.entry-links {
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.entry-links a {
+  color: var(--link);
+  font-weight: 500;
+}
+.entry-links a::after {
+  content: "\00a0\203A";
+  transition: transform 0.2s var(--ease);
+  display: inline-block;
+}
+.entry-links a:hover { text-decoration: none; }
+.entry-links a:hover::after { transform: translateX(2px); }
+.entry-links a + a { margin-left: 0.375rem; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  padding: 0.1875rem 0.625rem;
+  border-radius: 980px;
+  background: var(--chip);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  color: var(--fg-secondary);
+}
+
+/* Entry with a figure: thumbnail left, text right */
+.entries > li.has-figure {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  column-gap: 1.5rem;
+  align-items: start;
+}
+
+.entry-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.625rem;
+  /* figures are usually white-background diagrams, so keep a light plate
+     under them even in dark mode */
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+/* Note under a list, e.g. "Full list on Google Scholar" */
+.pub-note {
+  margin: 1.25rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  color: var(--fg-secondary);
+}
+
+/* ---------- Pill button ---------- */
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1.125rem;
+  border-radius: 980px;
+  transition: background 0.2s var(--ease);
+}
+.btn:hover { background: var(--accent-hover); text-decoration: none; color: #fff; }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  max-width: var(--page-max);
+  margin: 3rem auto 0;
+  padding: 1.25rem 1.5rem 2.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--fg-secondary);
+  font-size: 0.75rem;
+}
+.site-footer p { margin: 0; }
+
+/* ---------- Scroll reveal (added by script; no-JS shows everything) ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 52rem) {
+  .page-wrap {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 2rem;
+  }
+
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    grid-template-areas: "pic text" "links links";
+    column-gap: 1.25rem;
+    align-items: center;
+    padding: 1.5rem;
+  }
+  .avatar { grid-area: pic; width: 5rem; height: 5rem; margin: 0; }
+  .author-text { grid-area: text; text-align: left; }
+  /* no avatar file yet: drop the reserved column */
+  .sidebar.no-avatar {
+    grid-template-columns: 1fr;
+    grid-template-areas: "text" "links";
+  }
+  .author-links {
+    grid-area: links;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .author-links li { margin-bottom: 0; }
+
+  .site-nav ul { gap: 1.125rem; }
+  .content h1 { font-size: 2.25rem; }
+  .lede { font-size: 1.1875rem; margin-bottom: 1.5rem; }
+  .content section { padding: 1.5rem 1.375rem; }
+  .entry-head { flex-direction: column; gap: 0; }
+  .entries > li.has-figure {
+    grid-template-columns: 1fr;
+    row-gap: 0.875rem;
+  }
+  .entry-figure { max-width: 22rem; }
+}
+
+@media (max-width: 30rem) {
+  .masthead { position: static; height: auto; }
+  .masthead-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+  }
+  .sidebar {
+    grid-template-columns: 1fr;
+    grid-template-areas: "pic" "text" "links";
+    justify-items: center;
+    row-gap: 1rem;
+    text-align: center;
+  }
+  .author-text { text-align: center; }
+  .author-links { justify-content: center; }
+  .content h1 { font-size: 2rem; }
+}
