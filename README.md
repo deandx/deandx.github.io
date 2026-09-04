@@ -42,7 +42,6 @@ stand-in used by the example entry — delete it once real figures are in.
 
 ```bash
 python3 -m http.server 8000
-# open http://localhost:8000
 ```
 
 ## Publishing
